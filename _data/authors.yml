@@ -1,0 +1,14 @@
+tuanbo91:
+  name        : "Tuấn (Jun) Lê"
+  bio         : "Just another man on earth ..."
+  avatar      : "https://storage.googleapis.com/ghost-blog-tuanbo91/images/2020/05/0.jpg"
+  links:
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:root@leanhtuan.dev"
+    - label: "Website"
+      icon: "fas fa-fw fa-link"
+      url: "https://leanhtuan.dev"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/tuanbo91/"

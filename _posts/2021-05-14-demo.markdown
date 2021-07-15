@@ -1,0 +1,24 @@
+---
+layout: single
+author: tuanbo91
+title: 'Demo OpenShift'
+date: '2021-05-13 06:00:55'
+classes: wide
+comment: true
+header:
+  image: https://storage.googleapis.com/ghost-blog-tuanbo91/images/serverless/serverless-the-future-of-the-cloud-3-638.jpeg
+tags:
+- kubernetes
+- pod
+- container
+- network
+- microservices
+- cloud
+- serverless
+---
+
+## Demo.‌‌
+**TL;DR**:
+> HTML generator: [**jekyll**](https://jekyllrb.com/)\
+> Web server: [**nginx**](https://www.nginx.com/)\
+> Platform service: [**OpenShift**](https://www.openshift.com/)

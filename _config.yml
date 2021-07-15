@@ -1,0 +1,101 @@
+# Welcome to Jekyll!
+#
+# This config file is meant for settings that affect your whole blog, values
+# which you are expected to set up once and rarely edit after that. If you find
+# yourself editing this file very often, consider using Jekyll's data files
+# feature for the data you need to update frequently.
+#
+# For technical reasons, this file is *NOT* reloaded automatically when you use
+# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
+#
+# If you need help with YAML syntax, here are some quick references for you: 
+# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
+# https://learnxinyminutes.com/docs/yaml/
+#
+# Site settings
+# These are used to personalize your new site. If you look in the HTML files,
+# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
+# You can create any custom variable you would like, and they will be accessible
+# in the templates via {{ site.myvariable }}.
+
+title: Just another blogs ...
+title_separator: "-"
+subtitle: "未来。"
+description: "格物， 致知， 诚意， 正心， 修身， 齐家， 治国， 平天下."
+
+name: "Lê Anh Tuấn"
+baseurl: "/" # the subpath of your site, e.g. /blog
+url: "https://leanhtuan.dev" # the base hostname & protocol for your site, e.g. http://example.com
+
+# Build settings
+theme: minimal-mistakes-jekyll
+minimal_mistakes_skin: "dirt"
+plugins:
+  - jekyll-feed
+  - jekyll-include-cache
+  
+compress_html:
+  clippings: all
+  ignore:
+    envs: development  # disable compression in dev environment
+
+comments:
+  provider: "disqus"
+  disqus:
+    shortname: "https-leanhtuan-dev"
+
+defaults:
+  # _posts  
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
+
+paginate: 4 # amount of posts to show
+paginate_path: /page:num/
+
+analytics:
+  provider: "custom"
+
+footer:
+  links:
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: https://twitter.com/tuanbo91
+    - label: "Facebook"
+      icon: "fab fa-fw fa-facebook-square"
+      url: https://www.facebook.com/tuanbo91/
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: https://github.com/tuanbo91
+    - label: "Instagram"
+      icon: "fab fa-fw fa-instagram"
+      url: https://www.instagram.com/tuanbo91/
+
+
+# Exclude from processing.
+# The following items will not be processed, by default.
+# Any item listed under the `exclude:` key here will be automatically added to
+# the internal "default list".
+#
+# Excluded items can be processed by explicitly listing the directories or
+# their entries' file path in the `include:` list.
+#
+exclude:
+   - .sass-cache/
+   - .jekyll-cache/
+   - gemfiles/
+   - Gemfile
+   - Gemfile.lock
+   - _deploy/  
+#   - node_modules/
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
