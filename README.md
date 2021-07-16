@@ -1,2 +1,2 @@
 # myblog
-jekyll / gcp cloud run / nginx / disqus
+jekyll / nginx / openshift / disqus
