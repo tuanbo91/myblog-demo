@@ -1,2 +1,2 @@
 # myblog
-jekyll / nginx / openshift / disqus
+jekyll / nginx / k8s(GKE) / disqus
