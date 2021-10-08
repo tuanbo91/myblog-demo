@@ -1,7 +1,7 @@
 ---
 layout: single
 author: tuanbo91
-title: 'Demo OpenShift'
+title: 'Demo Cloud Build & GKE'
 date: '2021-05-13 06:00:55'
 classes: wide
 comment: true
