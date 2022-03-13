@@ -1,0 +1,9 @@
+steps:
+- name: "gcr.io/cloud-builders/kubectl"
+  args: ['get', 'nodes']
+  env:
+  - 'CLOUDSDK_COMPUTE_REGION=asia-southeast1'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=gke-private-demo'
+options:
+  workerPool:
+    'projects/gke-demo-328407/locations/asia-southeast1/workerPools/cloud-build-gke-private'

@@ -1,0 +1,44 @@
+steps:
+  - name: 'asia.gcr.io/gke-private-343713/jekyll_builder:latest'
+    env:
+      - JEKYLL_ENV=production
+    args:
+      - bash
+      - '-c'
+      - >-
+        chown -R jekyll:jekyll ./ && bundle install && JEKYLL_ENV=dev
+        jekyll build
+    id: Build
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - build
+      - '--no-cache'
+      - '-t'
+      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - .
+      - '-f'
+      - _deploy/pack.Dockerfile
+    id: Pack
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - push
+      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+    id: Push
+  - name: gcr.io/cloud-builders/gke-deploy
+    args:
+      - run
+      - '--location=$_DEPLOY_REGION'
+      - '--cluster=$_GLE_CLUSTER'
+      - '--image=$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - '--env=NGINX_PORT=8080'
+    id: Deploy  
+options:
+  substitutionOption: ALLOW_LOOSE
+  pool:
+    name: >-
+      projects/gke-private-343713/locations/asia-southeast1/workerPools/cloud-build-gke-private
+substitutions:
+  _SERVICE_NAME: myblog-demo
+  _DEPLOY_REGION: asia-southeast1
+  _GLE_CLUSTER: gke-private-demo
+  _GCR_HOSTNAME: asia.gcr.io
