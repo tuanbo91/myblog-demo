@@ -1,0 +1,18 @@
+steps:
+  - name: gcr.io/cloud-builders/gke-deploy
+    args:
+      - run
+      - '--location=$_DEPLOY_REGION'
+      - '--cluster=$_GLE_CLUSTER'
+      - '--image=$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+    id: Deploy  
+options:
+  substitutionOption: ALLOW_LOOSE
+  pool:
+    name: >-
+      projects/gke-private-343713/locations/asia-southeast1/workerPools/cloud-build-gke-private
+substitutions:
+  _SERVICE_NAME: myblog-demo
+  _DEPLOY_REGION: asia-southeast1
+  _GLE_CLUSTER: gke-private-prod
+  _GCR_HOSTNAME: asia.gcr.io
