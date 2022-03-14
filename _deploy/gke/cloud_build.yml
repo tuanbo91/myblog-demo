@@ -30,7 +30,6 @@ steps:
       - '--location=$_DEPLOY_REGION'
       - '--cluster=$_GLE_CLUSTER'
       - '--image=$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
-      - '--env=NGINX_PORT=8080'
     id: Deploy  
 options:
   substitutionOption: ALLOW_LOOSE
