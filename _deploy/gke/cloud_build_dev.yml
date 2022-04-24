@@ -12,7 +12,7 @@ steps:
       - '--timeout=1m0s'
     id: Deploy
 
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
     entrypoint: "bash"
     args:
       - "-c"
@@ -20,7 +20,7 @@ steps:
         curl -si http://dev.demo.leanhtuan.org | grep HTTP | cut -d' ' -f2 | if grep -Fxq 200; then echo 'front-end successfully deployed' && exit 0; else exit 1; fi
     id: verify deployment
 
-  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
     entrypoint: "bash"
     args:
       - "-c"
