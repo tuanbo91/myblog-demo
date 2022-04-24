@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-end
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: front-end
+  template:
+    metadata:
+      labels:
+        app: front-end
+    spec:
+      containers:
+      - image: asia-docker.pkg.dev/anthos-multi-clusters/asia.gcr.io/myblog-demo/front-end:latest
+        name: front-end
+        env:
+        - name: NGINX_PORT
+          value: "80"

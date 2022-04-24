@@ -1,5 +1,5 @@
 steps:
-  - name: 'asia.gcr.io/gke-private-343713/jekyll_builder:latest'
+  - name: 'quay.io/tuanbo91/jekyll_builder@sha256:14d16f252c2116aaf377d26c2dd56d0a19ada785f8995425149be701b8392d14'
     env:
       - JEKYLL_ENV=production
     args:
@@ -9,35 +9,47 @@ steps:
         chown -R jekyll:jekyll ./ && bundle install && JEKYLL_ENV=dev
         jekyll build
     id: Build
-  - name: gcr.io/cloud-builders/docker
+
+  - name: 'gcr.io/kaniko-project/executor'
     args:
-      - build
-      - '--no-cache'
-      - '-t'
-      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
-      - .
-      - '-f'
-      - _deploy/pack.Dockerfile
-    id: Pack
-  - name: gcr.io/cloud-builders/docker
+      - "--dockerfile=_deploy/pack.Dockerfile"
+      - "--destination=$_PKG_HOSTNAME/$PROJECT_ID/$_GCR_HOSTNAME/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
+    id: Pack & Push
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: bash
     args:
-      - push
-      - '$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
-    id: Push
-  - name: gcr.io/cloud-builders/gke-deploy
+      - -c
+      - |
+        gcloud artifacts docker images scan $_PKG_HOSTNAME/$PROJECT_ID/$_GCR_HOSTNAME/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA \
+        --location=$_LOCATION \
+        --remote \
+        --format='value(response.scan)' > /workspace/scan_id.txt
+    id: scan
+    
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: bash
     args:
-      - run
-      - '--location=$_DEPLOY_REGION'
-      - '--cluster=$_GLE_CLUSTER'
-      - '--image=$_GCR_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
-    id: Deploy  
-options:
-  substitutionOption: ALLOW_LOOSE
-  pool:
-    name: >-
-      projects/gke-private-343713/locations/asia-southeast1/workerPools/cloud-build-gke-private
+      - -c
+      - |
+        gcloud artifacts docker images list-vulnerabilities $(cat /workspace/scan_id.txt) \
+        --format='value(vulnerability.effectiveSeverity)' | if grep -Fxq $_SEVERITY; \
+        then echo 'Failed vulnerability check' && exit 1; else exit 0; fi
+    id: severity check
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        curl -X POST -H "Content-type: application/json" -H "Authorization: Bearer $(gcloud config config-helper --format='value(credential.access_token)')" https://cloudbuild.googleapis.com/v1/projects/anthos-multi-clusters/locations/asia-southeast1/triggers/deploy-to-dev:run
+    id: trigger GKE dev deployment
+
 substitutions:
-  _SERVICE_NAME: myblog-demo
+  _LOCATION: asia
+  _SERVICE_NAME: front-end
   _DEPLOY_REGION: asia-southeast1
-  _GLE_CLUSTER: gke-private-demo
+  _GLE_CLUSTER: cluster-1
   _GCR_HOSTNAME: asia.gcr.io
+  _PKG_HOSTNAME: asia-docker.pkg.dev
+  _SEVERITY: HIGH

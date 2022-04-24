@@ -10,10 +10,20 @@ steps:
       - '--namespace=$_SERVICE_NAME'
       - '--location=$_DEPLOY_REGION'
       - '--cluster=$_GKE_CLUSTER'
-    id: Deploy 
+      - '--timeout 1m0s'
+    id: Deploy
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        curl -X POST -H "Content-type: application/json" -H "Authorization: Bearer $(gcloud config config-helper --format='value(credential.access_token)')" https://cloudbuild.googleapis.com/v1/projects/anthos-multi-clusters/locations/asia-southeast1/triggers/deploy-to-prod:run
+    id: trigger prod deployment
+
 substitutions:
   _SERVICE_NAME: front-end
   _DEPLOY_REGION: asia-southeast1-b
-  _GKE_CLUSTER: gke-prod-myblog-demo
+  _GKE_CLUSTER: gke-dev-myblog-demo
   _GCR_HOSTNAME: asia.gcr.io
   _PKG_HOSTNAME: asia-docker.pkg.dev
