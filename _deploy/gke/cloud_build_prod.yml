@@ -9,7 +9,7 @@ steps:
       - '--namespace=$_SERVICE_NAME'
       - '--location=$_DEPLOY_REGION'
       - '--cluster=$_GKE_CLUSTER'
-    id: Deploy 
+    id: Deploy Production
 substitutions:
   _SERVICE_NAME: front-end
   _DEPLOY_REGION: asia-southeast1-b

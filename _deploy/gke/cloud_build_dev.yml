@@ -17,6 +17,14 @@ steps:
     args:
       - "-c"
       - |
+        curl -si http://dev.demo.leanhtuan.org | grep HTTP | cut -d' ' -f2 | if grep -Fxq 200; then echo 'front-end successfully deployed' && exit 0; else exit 1; fi
+    id: verify deployment
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
         curl -X POST -H "Content-type: application/json" -H "Authorization: Bearer $(gcloud config config-helper --format='value(credential.access_token)')" https://cloudbuild.googleapis.com/v1/projects/anthos-multi-clusters/locations/asia-southeast1/triggers/deploy-to-prod:run
     id: trigger prod deployment
 
