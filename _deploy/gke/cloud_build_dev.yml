@@ -10,7 +10,7 @@ steps:
       - '--namespace=$_SERVICE_NAME'
       - '--location=$_DEPLOY_REGION'
       - '--cluster=$_GKE_CLUSTER'
-      - '--timeout 1m0s'
+      - '--timeout=1m0s'
     id: Deploy
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
