@@ -3,7 +3,11 @@ kind: Service
 metadata:
   name: front-end-service
 spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
   selector:
     app.kubernetes.io/name: front-end
   type: LoadBalancer
-  loadBalancerIP: 34.143.183.71
+  loadBalancerIP: 34.142.197.55

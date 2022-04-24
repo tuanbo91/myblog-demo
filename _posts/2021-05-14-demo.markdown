@@ -21,4 +21,4 @@ tags:
 **TL;DR**:
 > HTML generator: [**jekyll**](https://jekyllrb.com/)\
 > Web server: [**nginx**](https://www.nginx.com/)\
-> Platform service: [**OpenShift**](https://www.openshift.com/)
+> Platform service: [**GKE**](https://cloud.google.com/kubernetes-engine)
