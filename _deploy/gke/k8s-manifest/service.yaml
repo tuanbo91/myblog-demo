@@ -3,5 +3,7 @@ kind: Service
 metadata:
   name: front-end-service
 spec:
+  selector:
+    app.kubernetes.io/name: front-end
   type: LoadBalancer
   loadBalancerIP: 34.143.183.71
