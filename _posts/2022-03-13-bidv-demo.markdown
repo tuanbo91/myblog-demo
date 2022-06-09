@@ -1,7 +1,7 @@
 ---
 layout: single
 author: tuanbo91
-title: 'Bidv Demo'
+title: 'ABB Demo'
 date: '2022-03-13 06:00:55'
 classes: wide
 comment: true
@@ -15,4 +15,6 @@ tags:
 
 # Demo CI/CD
 
-Hello BIDV
+Hello ABB
+
+Ngày 09 Jun 2022
