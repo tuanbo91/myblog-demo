@@ -1,8 +1,8 @@
 ---
 layout: single
 author: tuanbo91
-title: 'Demo Cloud Build & GKE'
-date: '2021-05-13 06:00:55'
+title: 'Demo Snyk & Cloud Build & Cloud Run'
+date: '2021-06-22 06:00:55'
 classes: wide
 comment: true
 header:
@@ -21,4 +21,4 @@ tags:
 **TL;DR**:
 > HTML generator: [**jekyll**](https://jekyllrb.com/)\
 > Web server: [**nginx**](https://www.nginx.com/)\
-> Platform service: [**GKE**](https://cloud.google.com/kubernetes-engine)
+> Platform service: [**Cloud Run**](https://cloud.google.com/run)
