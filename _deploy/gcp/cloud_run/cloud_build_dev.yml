@@ -1,0 +1,37 @@
+steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:slim'
+    args:
+      - run
+      - services
+      - update
+      - $_SERVICE_NAME-$_ENV
+      - '--platform=managed'
+      - '--image=$_PKG_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - >-
+        --labels=managed-by=gcp-cloud-build-deploy-cloud-run,commit-sha=$COMMIT_SHA,gcb-build-id=$BUILD_ID,gcb-trigger-id=$_TRIGGER_ID,$_LABELS
+      - '--region=$_DEPLOY_REGION'
+      - '--quiet'
+    id: Deploy
+    entrypoint: gcloud
+
+  # - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+  #   entrypoint: "bash"
+  #   args:
+  #     - "-c"
+  #     - |
+  #       curl -si http://dev.demo.leanhtuan.org | grep HTTP | cut -d' ' -f2 | if grep -Fxq 200; then echo 'front-end successfully deployed' && exit 0; else exit 1; fi
+  #   id: verify deployment
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        curl -X POST -H "Content-type: application/json" -H "Authorization: Bearer $(gcloud config config-helper --format='value(credential.access_token)')" https://cloudbuild.googleapis.com/v1/projects/snyk-demo-354005/locations/global/triggers/deploy-to-prod:run
+    id: trigger prod deployment
+
+substitutions:
+  _ENV: dev
+  _SERVICE_NAME: front-end
+  _DEPLOY_REGION: asia-southeast1
+  _PKG_HOSTNAME: asia-southeast1-docker.pkg.dev

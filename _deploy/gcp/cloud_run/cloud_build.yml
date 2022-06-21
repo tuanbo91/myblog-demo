@@ -1,0 +1,53 @@
+steps:
+  - name: 'tuanbo91/jekyll_builder:latest'
+    env:
+      - JEKYLL_ENV=production
+    args:
+      - bash
+      - '-c'
+      - >-
+        chown -R jekyll:jekyll ./ && bundle install && JEKYLL_ENV=dev
+        jekyll build
+    id: Build
+
+  - name: 'gcr.io/kaniko-project/executor'
+    args:
+      - "--dockerfile=_deploy/pack.Dockerfile"
+      - "--destination=$_PKG_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
+    id: Pack & Push
+
+  # - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  #   entrypoint: bash
+  #   args:
+  #     - -c
+  #     - |
+  #       gcloud artifacts docker images scan $_PKG_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA \
+  #       --location=$_LOCATION \
+  #       --remote \
+  #       --format='value(response.scan)' > /workspace/scan_id.txt
+  #   id: scan
+    
+  # - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+  #   entrypoint: bash
+  #   args:
+  #     - -c
+  #     - |
+  #       gcloud artifacts docker images list-vulnerabilities $(cat /workspace/scan_id.txt) \
+  #       --format='value(vulnerability.effectiveSeverity)' | if grep -Fxq $_SEVERITY; \
+  #       then echo 'Failed vulnerability check' && exit 1; else exit 0; fi
+  #   id: severity check
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        curl -X POST -H "Content-type: application/json" -H "Authorization: Bearer $(gcloud config config-helper --format='value(credential.access_token)')" https://cloudbuild.googleapis.com/v1/projects/snyk-demo-354005/locations/global/triggers/deploy-to-dev:run
+    id: trigger GKE dev deployment
+
+substitutions:
+  _LOCATION: asia
+  _SERVICE_NAME: front-end
+  _DEPLOY_REGION: asia-southeast1
+  _PKG_HOSTNAME: asia-southeast1-docker.pkg.dev
+  _SEVERITY: HIGH

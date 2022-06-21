@@ -49,7 +49,6 @@ substitutions:
   _LOCATION: asia
   _SERVICE_NAME: front-end
   _DEPLOY_REGION: asia-southeast1
-  _GLE_CLUSTER: cluster-1
   _GCR_HOSTNAME: asia.gcr.io
   _PKG_HOSTNAME: asia-docker.pkg.dev
   _SEVERITY: HIGH
