@@ -27,7 +27,7 @@ steps:
     args:
       - "-c"
       - |
-        curl -X POST -H "Content-type: application/json" -H "Authorization: Bearer $(gcloud config config-helper --format='value(credential.access_token)')" https://cloudbuild.googleapis.com/v1/projects/snyk-demo-354005/locations/global/triggers/deploy-to-prod:run
+        curl -X POST -H "Content-type: application/json" -H "Authorization: Bearer $(gcloud config config-helper --format='value(credential.access_token)')" https://cloudbuild.googleapis.com/v1/projects/snyk-demo-354005/locations/global/triggers/5-deploy-to-prod:run
     id: trigger prod deployment
 
 substitutions:

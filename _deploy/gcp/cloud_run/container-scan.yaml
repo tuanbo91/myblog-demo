@@ -1,0 +1,17 @@
+steps:
+  - name: 'snyk/snyk-cli:npm'
+    args:
+      - '-c'
+      - |
+        snyk config set api=${_SNYK_TOKEN}
+        snyk container test --severity-threshold=high registry.hub.docker.com/tuanbo91/front-end:latest || true
+    id: Snyk SAST & OSS & Container
+    entrypoint: bash
+
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        curl -X POST -H "Content-type: application/json" -H "Authorization: Bearer $(gcloud config config-helper --format='value(credential.access_token)')" https://cloudbuild.googleapis.com/v1/projects/snyk-demo-354005/locations/global/triggers/4-deploy-to-dev:run
+    id: trigger Build Pack Push deployment

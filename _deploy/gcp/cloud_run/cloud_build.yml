@@ -15,7 +15,6 @@ steps:
       - "--dockerfile=_deploy/pack.Dockerfile"
       - "--destination=$_PKG_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA"
       - "--destination=$_PKG_HOSTNAME/$PROJECT_ID/$REPO_NAME/$_SERVICE_NAME:latest"
-
     id: Pack & Push
 
   # - name: gcr.io/google.com/cloudsdktool/cloud-sdk
@@ -44,7 +43,7 @@ steps:
     args:
       - "-c"
       - |
-        curl -X POST -H "Content-type: application/json" -H "Authorization: Bearer $(gcloud config config-helper --format='value(credential.access_token)')" https://cloudbuild.googleapis.com/v1/projects/snyk-demo-354005/locations/global/triggers/deploy-to-dev:run
+        curl -X POST -H "Content-type: application/json" -H "Authorization: Bearer $(gcloud config config-helper --format='value(credential.access_token)')" https://cloudbuild.googleapis.com/v1/projects/snyk-demo-354005/locations/global/triggers/3-container-scan:run
     id: trigger GKE dev deployment
 
 substitutions:
