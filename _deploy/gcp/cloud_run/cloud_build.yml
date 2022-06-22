@@ -1,5 +1,5 @@
 steps:
-  - name: 'tuanbo91/jekyll_builder:latest'
+  - name: 'quay.io/tuanbo91/jekyll_builder:latest'
     env:
       - JEKYLL_ENV=production
     args:
