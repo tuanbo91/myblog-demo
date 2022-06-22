@@ -2,11 +2,9 @@
 layout: single
 author: tuanbo91
 title: 'Demo Snyk & Cloud Build & Cloud Run'
-date: '2021-06-22 06:00:55'
+date: '2021-06-22 06:00:58'
 classes: wide
 comment: true
-header:
-  image: https://storage.googleapis.com/ghost-blog-tuanbo91/images/serverless/serverless-the-future-of-the-cloud-3-638.jpeg
 tags:
 - kubernetes
 - pod
@@ -17,8 +15,10 @@ tags:
 - serverless
 ---
 
-## Demo.‌‌
+## Demo CI/CD intergrated with Snyk.‌‌
 **TL;DR**:
 > HTML generator: [**jekyll**](https://jekyllrb.com/)\
 > Web server: [**nginx**](https://www.nginx.com/)\
 > Platform service: [**Cloud Run**](https://cloud.google.com/run)
+
+07:26pm
