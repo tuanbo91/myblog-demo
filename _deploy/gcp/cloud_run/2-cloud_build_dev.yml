@@ -14,13 +14,13 @@ steps:
     id: Deploy
     entrypoint: gcloud
 
-  # - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
-  #   entrypoint: "bash"
-  #   args:
-  #     - "-c"
-  #     - |
-  #       curl -si http://dev.demo.leanhtuan.org | grep HTTP | cut -d' ' -f2 | if grep -Fxq 200; then echo 'front-end successfully deployed' && exit 0; else exit 1; fi
-  #   id: verify deployment
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
+    entrypoint: "bash"
+    args:
+      - "-c"
+      - |
+        curl -si http://dev.demo.leanhtuan.org | grep HTTP | cut -d' ' -f2 | if grep -Fxq 200; then echo 'front-end successfully deployed' && exit 0; else exit 1; fi
+    id: verify deployment
 
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk:alpine
     entrypoint: "bash"
