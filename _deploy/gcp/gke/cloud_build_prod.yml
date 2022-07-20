@@ -2,7 +2,7 @@ steps:
   - name: gcr.io/cloud-builders/gke-deploy
     args:
       - run
-      - '--filename=_deploy/gke/k8s-manifest-prod/'
+      - '--filename=_deploy/gcp/gke/k8s-manifest-prod/'
       - '--image=$_PKG_HOSTNAME/$PROJECT_ID/$_GCR_HOSTNAME/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
       - '--recursive'
       - '--app=$_SERVICE_NAME'
