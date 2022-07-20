@@ -2,7 +2,7 @@
 layout: single
 author: tuanbo91
 title: 'Demo Snyk & Cloud Build & Cloud Run'
-date: '2021-06-22 06:00:58'
+date: '2022-06-22 06:00:58'
 classes: wide
 comment: true
 tags:
